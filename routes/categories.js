@@ -2,32 +2,30 @@ const { Router } = require("express");
 const router = Router();
 const { check } = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
-const { emailExiste, idExiste } = require("../helpers/db-validators");
+const {
+  categoriaIdExiste,
+  nombreCategoriaExiste,
+} = require("../helpers/db-validators");
 const { validarJWT } = require("../middlewares/validar-jwt");
 const { esAdminRole } = require("../middlewares/validar-rol");
 const {
-  usersGet,
-  usersPost,
-  usersPut,
-  usersDelete,
-} = require("../controllers/users");
+  categoriesGet,
+  categoriesPost,
+  categoriesPut,
+  categoriesDelete,
+} = require("../controllers/categories");
 
-router.get("/", [validarJWT, esAdminRole, validarCampos], usersGet);
+router.get("/", [], categoriesGet);
 router.post(
   "/",
   [
+    validarJWT,
+    esAdminRole,
     check("nombre", "El nombre es obligatorio").not().isEmpty(),
-    check("email", "No es un correo válido").isEmail(),
-    check("email").custom(emailExiste),
-    check("password", "La contraseña es obligatoria").not().isEmpty().trim(),
-    check(
-      "password",
-      "La contraseña debe tener como minimo 6 caracteres"
-    ).isLength({ min: 6, max: 12 }),
-    check("rol", "No es un rol válido").isIn(["ADMIN_ROLE", "USER_ROLE"]),
+    check("nombre").custom(nombreCategoriaExiste),
     validarCampos,
   ],
-  usersPost
+  categoriesPost
 );
 router.put(
   "/:id",
@@ -35,10 +33,10 @@ router.put(
     validarJWT,
     esAdminRole,
     check("id", "No es un id válido").isMongoId(),
-    check("id").custom(idExiste),
+    check("id").custom(categoriaIdExiste),
     validarCampos,
   ],
-  usersPut
+  categoriesPut
 );
 router.delete(
   "/:id",
@@ -46,10 +44,10 @@ router.delete(
     validarJWT,
     esAdminRole,
     check("id", "No es un id válido").isMongoId(),
-    check("id").custom(idExiste),
+    check("id").custom(categoriaIdExiste),
     validarCampos,
   ],
-  usersDelete
+  categoriesDelete
 );
 
 module.exports = router;

@@ -1,11 +1,12 @@
 const { request, response } = require("express");
-const { required } = require("nodemon/lib/config");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
-const usersGet = (req = request, res = response) => {
+const usersGet = async (req = request, res = response) => {
+  const usuarios = await User.find({ estado: true });
   res.json({
     msg: "GET users",
+    usuarios,
   });
 };
 const usersPost = async (req = request, res = response) => {
