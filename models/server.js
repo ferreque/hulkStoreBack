@@ -9,6 +9,7 @@ class Server {
     this.authPath = "/api/auth";
     this.categoriesPath = "/api/categories";
     this.productsPath = "/api/products";
+    this.ordersPath = "/api/orders";
     this.middlewares();
     this.routes();
     this.conectarDB();
@@ -29,6 +30,7 @@ class Server {
     this.app.use(this.usersPhat, require("../routes/users"));
     this.app.use(this.categoriesPath, require("../routes/categories"));
     this.app.use(this.productsPath, require("../routes/products"));
+    this.app.use(this.ordersPath, require("../routes/orders"));
   }
   listen() {
     this.app.listen(process.env.PORT, () => {

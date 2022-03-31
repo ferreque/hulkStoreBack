@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const Categorie = require("../models/categorie");
 const Porduct = require("../models/product");
+const Order = require("../models/order");
 
 const emailExiste = async (email = "") => {
   const existeEmail = await User.findOne({ email });
@@ -23,14 +24,6 @@ const categoriaIdExiste = async (id) => {
     throw new Error(`El id de la categoria no existe`);
   }
 };
-
-const nombreCategoriaExiste = async (nombre = "") => {
-  const existeNombreCategoria = await Categorie.findOne({ nombre });
-  if (existeNombreCategoria) {
-    throw new Error(`La categoría ${nombre} ya existe`);
-  }
-};
-
 const productoIdExiste = async (id) => {
   const existeIdProducto = await Porduct.findById(id);
 
@@ -38,7 +31,19 @@ const productoIdExiste = async (id) => {
     throw new Error(`El id del producto no existe`);
   }
 };
+const pedidoIdExiste = async (id) => {
+  const existeIdPedido = await Order.findById(id);
 
+  if (!existeIdPedido) {
+    throw new Error(`El id del pedido no existe`);
+  }
+};
+const nombreCategoriaExiste = async (nombre = "") => {
+  const existeNombreCategoria = await Categorie.findOne({ nombre });
+  if (existeNombreCategoria) {
+    throw new Error(`La categoría ${nombre} ya existe`);
+  }
+};
 const nombreProductoExiste = async (nombre = "") => {
   const existeNombreProducto = await Porduct.findOne({ nombre });
   if (existeNombreProducto) {
@@ -50,6 +55,7 @@ module.exports = {
   emailExiste,
   idExiste,
   categoriaIdExiste,
+  pedidoIdExiste,
   nombreCategoriaExiste,
   productoIdExiste,
   nombreProductoExiste,
