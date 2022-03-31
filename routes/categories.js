@@ -10,12 +10,14 @@ const { validarJWT } = require("../middlewares/validar-jwt");
 const { esAdminRole } = require("../middlewares/validar-rol");
 const {
   categoriesGet,
+  categorieGet,
   categoriesPost,
   categoriesPut,
   categoriesDelete,
 } = require("../controllers/categories");
 
 router.get("/", [], categoriesGet);
+router.get("/:id", [], categorieGet);
 router.post(
   "/",
   [

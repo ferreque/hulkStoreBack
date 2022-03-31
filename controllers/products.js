@@ -10,6 +10,16 @@ const productsGet = async (req = request, res = response) => {
     products,
   });
 };
+
+const productGet = async (req = request, res = response) => {
+  const id = req.params.id;
+  const product = await Product.findById(id);
+  res.json({
+    msg: "GET producto",
+    product,
+  });
+};
+
 const productsPost = async (req = request, res = response) => {
   const { estado, ...body } = req.body;
 
@@ -53,6 +63,7 @@ const productsDelete = async (req = request, res = response) => {
 
 module.exports = {
   productsGet,
+  productGet,
   productsPost,
   productsPut,
   productsDelete,

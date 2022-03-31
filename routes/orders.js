@@ -7,12 +7,14 @@ const { validarJWT } = require("../middlewares/validar-jwt");
 const { esAdminRole } = require("../middlewares/validar-rol");
 const {
   ordersGet,
+  orderGet,
   ordersPost,
   ordersPut,
   ordersDelete,
 } = require("../controllers/orders");
 
 router.get("/", [validarJWT, esAdminRole, validarCampos], ordersGet);
+router.get("/:id", [validarJWT, esAdminRole, validarCampos], orderGet);
 router.post(
   "/",
   [

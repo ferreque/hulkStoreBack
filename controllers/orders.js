@@ -10,6 +10,16 @@ const ordersGet = async (req = request, res = response) => {
     orders,
   });
 };
+
+const orderGet = async (req = request, res = response) => {
+  const id = req.params.id;
+  const order = await Order.findById(id);
+
+  res.json({
+    mge: "GET pedido",
+    order,
+  });
+};
 const ordersPost = async (req = request, res = response) => {
   const {
     cancelar,
@@ -65,6 +75,7 @@ const ordersDelete = async (req = request, res = response) => {
 
 module.exports = {
   ordersGet,
+  orderGet,
   ordersPost,
   ordersPut,
   ordersDelete,

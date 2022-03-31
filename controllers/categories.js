@@ -12,6 +12,14 @@ const categoriesGet = async (req = request, res = response) => {
     categories,
   });
 };
+const categorieGet = async (req = request, res = response) => {
+  const id = req.params.id;
+  const categorie = await Categorie.findById(id);
+  res.json({
+    mge: "GET categoria",
+    categorie,
+  });
+};
 const categoriesPost = async (req = request, res = response) => {
   const { nombre } = req.body;
 
@@ -55,6 +63,7 @@ const categoriesDelete = async (req = request, res = response) => {
 
 module.exports = {
   categoriesGet,
+  categorieGet,
   categoriesPost,
   categoriesPut,
   categoriesDelete,

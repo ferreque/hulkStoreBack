@@ -11,12 +11,15 @@ const { validarJWT } = require("../middlewares/validar-jwt");
 const { esAdminRole } = require("../middlewares/validar-rol");
 const {
   productsGet,
+  productGet,
   productsPost,
   productsPut,
   productsDelete,
 } = require("../controllers/products");
 
 router.get("/", [], productsGet);
+
+router.get("/:id", [], productGet);
 router.post(
   "/",
   [
