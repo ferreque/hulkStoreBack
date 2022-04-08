@@ -4,7 +4,7 @@
   "description": "rest api",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
     "start": "node app"
   },
   "author": "Fernando Requena",
@@ -19,5 +19,13 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.9",
     "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  },
+  "jest" :{
+    "testEnvironment": "node",
+    "testTimeout": 8000
+
   }
 }

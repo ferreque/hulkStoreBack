@@ -6,9 +6,8 @@ const OrderSchema = new Schema({
     ref: "User",
     required: true,
   },
-  product: {
-    type: Schema.Types.ObjectId,
-    ref: "Product",
+  products: {
+    type: Array,
     required: true,
   },
   estado: {
@@ -17,18 +16,13 @@ const OrderSchema = new Schema({
     default: "PENDIENTE",
     required: true,
   },
-  cancelar: {
+  pedidoActivo: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   precioTotal: {
     type: Number,
     default: 0,
-    required: true,
-  },
-  cantidad: {
-    type: Number,
-    default: 1,
     required: true,
   },
   provincia: {
@@ -38,10 +32,6 @@ const OrderSchema = new Schema({
   localidad: {
     type: String,
     required: [true, "La localidad es obligatoria"],
-  },
-  codigoPostal: {
-    type: Number,
-    required: [true, "El codigo postal es obligatorio"],
   },
   direccionEnvio: {
     type: String,

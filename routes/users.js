@@ -26,6 +26,13 @@ router.post(
       "password",
       "La contraseña debe tener como minimo 6 caracteres"
     ).isLength({ min: 6, max: 12 }),
+    check("provincia", "El nombre de la provincia es obligatorio")
+      .not()
+      .isEmpty(),
+    check("localidad", "El nombre de la localidad es obligatorio")
+      .not()
+      .isEmpty(),
+    check("direccionEnvio", "La dirección es obligatoria").not().isEmpty(),
     check("rol", "No es un rol válido").isIn(["ADMIN_ROLE", "USER_ROLE"]),
     validarCampos,
   ],
