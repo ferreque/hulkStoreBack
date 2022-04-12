@@ -8,7 +8,6 @@ const usersGet = async (req = request, res = response) => {
     msg: "GET users",
     usuarios,
   });
-  console.log(usuarios);
 };
 const userGet = async (req = request, res = response) => {
   const id = req.params.id;
