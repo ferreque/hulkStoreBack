@@ -25,6 +25,7 @@ const ProductSchema = new Schema({
   },
   imagen: {
     type: String,
+    default: "https://llevatilde.es/imagetexts/0/04/vac%C3%ADa.png",
   },
   categorie: {
     type: Schema.Types.ObjectId,
