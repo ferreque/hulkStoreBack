@@ -21,7 +21,6 @@ router.post(
     validarJWT,
     check("provincia", "La provincia es requerida").not().isEmpty(),
     check("localidad", "La localidad es requerida").not().isEmpty(),
-    check("codigoPostal", "El codigo postal es requerido").not().isEmpty(),
     check("direccionEnvio", "La dirección es requerida").not().isEmpty(),
     validarCampos,
   ],

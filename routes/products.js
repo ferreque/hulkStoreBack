@@ -28,7 +28,7 @@ router.post(
     check("nombre", "El nombre es obligatorio").not().isEmpty(),
     check("nombre").custom(nombreProductoExiste),
     check("precio", "El precio del producto es obligatorio").not().isEmpty(),
-    check("categorie", "No es un id válido").isMongoId(),
+    // check("categorie", "No es un id de categoria válido").isMongoId(),
     check("categorie").custom(categoriaIdExiste),
     validarCampos,
   ],
@@ -39,7 +39,7 @@ router.put(
   [
     validarJWT,
     esAdminRole,
-    check("id", "No es un id válido").isMongoId(),
+    check("id", "No es un id de producto válido").isMongoId(),
     check("id").custom(productoIdExiste),
     validarCampos,
   ],
@@ -50,7 +50,7 @@ router.delete(
   [
     validarJWT,
     esAdminRole,
-    check("id", "No es un id válido").isMongoId(),
+    check("id", "No es un id de producto válido").isMongoId(),
     check("id").custom(productoIdExiste),
     validarCampos,
   ],

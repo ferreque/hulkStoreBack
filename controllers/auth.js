@@ -12,13 +12,13 @@ const login = async (req = request, res = response) => {
     if (!usuario) {
       return res.status(400).json({
         msg: "Usuario o contraseña incorrectos",
-        ok: fasle,
+        ok: false,
       });
     }
     if (!usuario.estado) {
       return res.status(400).json({
         msg: "Usuario inactivo",
-        ok: fasle,
+        ok: false,
       });
     }
     const validPassword = bcrypt.compareSync(password, usuario.password);
@@ -35,12 +35,13 @@ const login = async (req = request, res = response) => {
     res.json({
       msg: "Login realizado con éxito",
       ok: true,
+      usuario,
       token,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      msg: "No hay token en la petición, hablar con admin",
+      msg: "Usuario o contraseña incorrectos",
       ok: false,
     });
   }

@@ -27,6 +27,18 @@ const UserSchema = new Schema({
     default: true,
     required: true,
   },
+  provincia: {
+    type: String,
+    required: [true, "El nombre de la provincia es obligatorio"],
+  },
+  localidad: {
+    type: String,
+    required: [true, "El nombre de la localidad es obligatorio"],
+  },
+  direccionEnvio: {
+    type: String,
+    required: [true, "El nombre de la direeción es obligatorio"],
+  },
 });
 UserSchema.methods.toJSON = function () {
   const { password, __v, ...data } = this.toObject();

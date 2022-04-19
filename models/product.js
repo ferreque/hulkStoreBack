@@ -1,6 +1,10 @@
 const { Schema, model } = require("mongoose");
 
 const ProductSchema = new Schema({
+  cantidad: {
+    type: Number,
+    default: 0,
+  },
   nombre: {
     type: String,
     required: [true, "El nombre del producto es obligatorio"],
@@ -19,6 +23,10 @@ const ProductSchema = new Schema({
     type: Number,
     required: true,
   },
+  imagen: {
+    type: String,
+    default: "https://llevatilde.es/imagetexts/0/04/vac%C3%ADa.png",
+  },
   categorie: {
     type: Schema.Types.ObjectId,
     ref: "Categorie",
@@ -30,6 +38,10 @@ const ProductSchema = new Schema({
   disponible: {
     type: Boolean,
     default: true,
+  },
+  stock: {
+    type: Number,
+    required: true,
   },
 });
 ProductSchema.methods.toJSON = function () {

@@ -2,9 +2,10 @@ const { request, response } = require("express");
 const Order = require("../models/order");
 
 const ordersGet = async (req = request, res = response) => {
-  const orders = await Order.find({ cancelar: false })
-    .populate("cliente", "nombre email")
-    .populate("product", "nombre precio");
+  const orders = await Order.find({ pedidoActivo: true }).populate(
+    "cliente",
+    "nombre email provincia localidad direccionEnvio"
+  );
   res.json({
     msg: "GET pedidos",
     orders,
@@ -22,21 +23,22 @@ const orderGet = async (req = request, res = response) => {
 };
 const ordersPost = async (req = request, res = response) => {
   const {
-    cancelar,
+    products,
     provincia,
     localidad,
     codigoPostal,
     direccionEnvio,
-    product,
+    precioTotal,
   } = req.body;
+
   data = {
-    cancelar,
     provincia,
     localidad,
     codigoPostal,
     direccionEnvio,
-    product,
+    products,
     cliente: req.usuario._id,
+    precioTotal,
   };
 
   const order = new Order(data);
@@ -44,18 +46,17 @@ const ordersPost = async (req = request, res = response) => {
   await order.save();
 
   res.json({
-    msg: "Nueva orden generada",
+    msg: "Nuevo pedido generado",
     order,
   });
 };
 const ordersPut = async (req = request, res = response) => {
   const id = req.params.id;
   const { _id, ...rest } = req.body;
-  console.log(req.params);
 
   const order = await Order.findByIdAndUpdate(id, rest, { new: true });
   res.json({
-    msg: "Orden editada",
+    msg: "Pedido editado",
     order,
   });
 };
@@ -64,11 +65,11 @@ const ordersDelete = async (req = request, res = response) => {
 
   const order = await Order.findByIdAndUpdate(
     id,
-    { cancelar: true },
+    { pedidoActivo: false },
     { new: true }
   );
   res.json({
-    msg: "Producto eliminado",
+    msg: "Pedido eliminado",
     order,
   });
 };
