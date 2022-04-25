@@ -1,10 +1,10 @@
 const { request, response } = require("express");
 const Order = require("../models/order");
 
-const ordersGet = async (req = request, res = response) => {
-  const orders = await Order.find({ pedidoActivo: true }).populate(
-    "cliente",
-    "nombre email provincia localidad direccionEnvio"
+const getOrders = async (req = request, res = response) => {
+  const orders = await Order.find({ activeOrder: true }).populate(
+    "client",
+    "name email province location shippingAddress"
   );
   res.json({
     msg: "GET pedidos",
@@ -12,7 +12,7 @@ const ordersGet = async (req = request, res = response) => {
   });
 };
 
-const orderGet = async (req = request, res = response) => {
+const getOneOrder = async (req = request, res = response) => {
   const id = req.params.id;
   const order = await Order.findById(id);
 
@@ -21,24 +21,17 @@ const orderGet = async (req = request, res = response) => {
     order,
   });
 };
-const ordersPost = async (req = request, res = response) => {
-  const {
-    products,
-    provincia,
-    localidad,
-    codigoPostal,
-    direccionEnvio,
-    precioTotal,
-  } = req.body;
+const createOrder = async (req = request, res = response) => {
+  const { products, province, location, shippingAddress, totalPrice } =
+    req.body;
 
   data = {
-    provincia,
-    localidad,
-    codigoPostal,
-    direccionEnvio,
+    province,
+    location,
+    shippingAddress,
     products,
-    cliente: req.usuario._id,
-    precioTotal,
+    client: req.user._id,
+    totalPrice,
   };
 
   const order = new Order(data);
@@ -50,7 +43,7 @@ const ordersPost = async (req = request, res = response) => {
     order,
   });
 };
-const ordersPut = async (req = request, res = response) => {
+const editOrder = async (req = request, res = response) => {
   const id = req.params.id;
   const { _id, ...rest } = req.body;
 
@@ -60,12 +53,12 @@ const ordersPut = async (req = request, res = response) => {
     order,
   });
 };
-const ordersDelete = async (req = request, res = response) => {
+const deleteOrder = async (req = request, res = response) => {
   const id = req.params.id;
 
   const order = await Order.findByIdAndUpdate(
     id,
-    { pedidoActivo: false },
+    { activeOrder: false },
     { new: true }
   );
   res.json({
@@ -75,9 +68,9 @@ const ordersDelete = async (req = request, res = response) => {
 };
 
 module.exports = {
-  ordersGet,
-  orderGet,
-  ordersPost,
-  ordersPut,
-  ordersDelete,
+  getOrders,
+  getOneOrder,
+  createOrder,
+  editOrder,
+  deleteOrder,
 };

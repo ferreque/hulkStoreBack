@@ -1,55 +1,55 @@
 const { Router } = require("express");
 const router = Router();
 const { check } = require("express-validator");
-const { validarCampos } = require("../middlewares/validar-campos");
+const { validateFields } = require("../middlewares/validate-fields");
 const {
-  categoriaIdExiste,
-  nombreCategoriaExiste,
+  idCategoryExists,
+  nameCategoryExists,
 } = require("../helpers/db-validators");
-const { validarJWT } = require("../middlewares/validar-jwt");
-const { esAdminRole } = require("../middlewares/validar-rol");
+const { validateJWT } = require("../middlewares/validate-jwt");
+const { isAdminRole } = require("../middlewares/validate-rol");
 const {
-  categoriesGet,
-  categorieGet,
-  categoriesPost,
-  categoriesPut,
-  categoriesDelete,
+  getCategories,
+  getOneCategorie,
+  createCategorie,
+  editCategorie,
+  deleteCategorie,
 } = require("../controllers/categories");
 
-router.get("/", [], categoriesGet);
-router.get("/:id", [], categorieGet);
+router.get("/", [], getCategories);
+router.get("/:id", [], getOneCategorie);
 router.post(
   "/",
   [
-    validarJWT,
-    esAdminRole,
-    check("nombre", "El nombre es obligatorio").not().isEmpty(),
-    check("nombre").custom(nombreCategoriaExiste),
-    validarCampos,
+    validateJWT,
+    isAdminRole,
+    check("name", "El nombre es obligatorio").not().isEmpty(),
+    check("name").custom(nameCategoryExists),
+    validateFields,
   ],
-  categoriesPost
+  createCategorie
 );
 router.put(
   "/:id",
   [
-    validarJWT,
-    esAdminRole,
+    validateJWT,
+    isAdminRole,
     check("id", "No es un id válido").isMongoId(),
-    check("id").custom(categoriaIdExiste),
-    validarCampos,
+    check("id").custom(idCategoryExists),
+    validateFields,
   ],
-  categoriesPut
+  editCategorie
 );
 router.delete(
   "/:id",
   [
-    validarJWT,
-    esAdminRole,
+    validateJWT,
+    isAdminRole,
     check("id", "No es un id válido").isMongoId(),
-    check("id").custom(categoriaIdExiste),
-    validarCampos,
+    check("id").custom(idCategoryExists),
+    validateFields,
   ],
-  categoriesDelete
+  deleteCategorie
 );
 
 module.exports = router;

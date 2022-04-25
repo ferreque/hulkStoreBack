@@ -4,7 +4,7 @@
   "description": "rest api",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose",
+    "test": "jest --verbose --runInBand --forceExit",
     "start": "node app"
   },
   "author": "Fernando Requena",
@@ -21,11 +21,10 @@
     "nodemon": "^2.0.15"
   },
   "devDependencies": {
-    "jest": "^27.5.1"
+    "jest": "^27.5.1",
+    "supertest": "^6.2.2"
   },
-  "jest" :{
-    "testEnvironment": "node",
-    "testTimeout": 8000
-
+  "jest": {
+    "testEnvironment": "node"
   }
 }

@@ -1,10 +1,10 @@
 const { request, response } = require("express");
 const Categorie = require("../models/categorie");
 
-const categoriesGet = async (req = request, res = response) => {
-  const categories = await Categorie.find({ estado: true }).populate(
+const getCategories = async (req = request, res = response) => {
+  const categories = await Categorie.find({ status: true }).populate(
     "user",
-    "nombre email"
+    "name email"
   );
 
   res.json({
@@ -12,20 +12,20 @@ const categoriesGet = async (req = request, res = response) => {
     categories,
   });
 };
-const categorieGet = async (req = request, res = response) => {
+const getOneCategorie = async (req = request, res = response) => {
   const id = req.params.id;
   const categorie = await Categorie.findById(id);
   res.json({
-    mge: "GET categoria",
+    msg: "GET categoria",
     categorie,
   });
 };
-const categoriesPost = async (req = request, res = response) => {
-  const { nombre } = req.body;
+const createCategorie = async (req = request, res = response) => {
+  const { name } = req.body;
 
   const data = {
-    nombre,
-    user: req.usuario._id,
+    name,
+    user: req.user._id,
   };
 
   const categorie = new Categorie(data);
@@ -33,11 +33,11 @@ const categoriesPost = async (req = request, res = response) => {
   await categorie.save();
 
   res.json({
-    msg: `Nueva categoria ${nombre} creada`,
+    msg: `Nueva categoria ${name} creada`,
     categorie,
   });
 };
-const categoriesPut = async (req = request, res = response) => {
+const editCategorie = async (req = request, res = response) => {
   const id = req.params.id;
   const { _id, ...rest } = req.body;
 
@@ -47,12 +47,12 @@ const categoriesPut = async (req = request, res = response) => {
     categorie,
   });
 };
-const categoriesDelete = async (req = request, res = response) => {
+const deleteCategorie = async (req = request, res = response) => {
   const id = req.params.id;
 
   const categorie = await Categorie.findByIdAndUpdate(
     id,
-    { estado: false },
+    { status: false },
     { new: true }
   );
   res.json({
@@ -62,9 +62,9 @@ const categoriesDelete = async (req = request, res = response) => {
 };
 
 module.exports = {
-  categoriesGet,
-  categorieGet,
-  categoriesPost,
-  categoriesPut,
-  categoriesDelete,
+  getCategories,
+  getOneCategorie,
+  createCategorie,
+  editCategorie,
+  deleteCategorie,
 };

@@ -2,46 +2,46 @@ const { request, response } = require("express");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
-const usersGet = async (req = request, res = response) => {
-  const usuarios = await User.find({ estado: true });
+const getUsers = async (req = request, res = response) => {
+  const users = await User.find({ status: true });
   res.json({
-    msg: "GET users",
-    usuarios,
+    msg: "Usuarios obtenidos",
+    users,
   });
 };
-const userGet = async (req = request, res = response) => {
+const getOneUser = async (req = request, res = response) => {
   const id = req.params.id;
-  const usuario = await User.findById(id);
+  const user = await User.findById(id);
   res.json({
-    msg: "GET user",
-    usuario,
+    msg: "Usuario obtenido",
+    user,
   });
 };
-const usersPost = async (req = request, res = response) => {
-  const { nombre, email, password, rol, provincia, localidad, direccionEnvio } =
+const createUser = async (req = request, res = response) => {
+  const { name, email, password, rol, province, location, shippingAddress } =
     req.body;
 
-  const usuario = new User({
-    nombre,
+  const user = new User({
+    name,
     email,
     password,
     rol,
-    provincia,
-    localidad,
-    direccionEnvio,
+    province,
+    location,
+    shippingAddress,
   });
 
   const salt = bcrypt.genSaltSync();
-  usuario.password = bcrypt.hashSync(password, salt);
+  user.password = bcrypt.hashSync(password, salt);
 
-  await usuario.save();
+  await user.save();
 
   res.json({
     msg: "Usuario creado",
-    usuario,
+    user,
   });
 };
-const usersPut = async (req = request, res = response) => {
+const editUser = async (req = request, res = response) => {
   const id = req.params.id;
   const { _id, email, rol, password, ...rest } = req.body;
 
@@ -50,30 +50,30 @@ const usersPut = async (req = request, res = response) => {
     rest.password = bcrypt.hashSync(password, salt);
   }
 
-  const usuario = await User.findByIdAndUpdate(id, rest, { new: true });
+  const user = await User.findByIdAndUpdate(id, rest, { new: true });
   res.json({
-    msg: "PUT user",
-    usuario,
+    msg: "Usuario editado",
+    user,
   });
 };
-const usersDelete = async (req = request, res = response) => {
+const deleteUser = async (req = request, res = response) => {
   const id = req.params.id;
 
-  const usuario = await User.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     id,
-    { estado: false },
+    { status: false },
     { new: true }
   );
   res.json({
-    msg: "DELETE user",
-    usuario,
+    msg: "Usuario eliminado",
+    user,
   });
 };
 
 module.exports = {
-  usersGet,
-  userGet,
-  usersPost,
-  usersPut,
-  usersDelete,
+  getUsers,
+  getOneUser,
+  createUser,
+  editUser,
+  deleteUser,
 };

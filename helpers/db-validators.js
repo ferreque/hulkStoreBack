@@ -3,60 +3,60 @@ const Categorie = require("../models/categorie");
 const Porduct = require("../models/product");
 const Order = require("../models/order");
 
-const emailExiste = async (email = "") => {
+const emailExists = async (email = "") => {
   const existeEmail = await User.findOne({ email });
   if (existeEmail) {
     throw new Error(`El email ${email} ya se encuantra registrado`);
   }
 };
 
-const idExiste = async (id) => {
+const idExists = async (id) => {
   const existeUsuario = await User.findById(id);
   if (!existeUsuario) {
     throw new Error("El id de usuario no existe");
   }
 };
 
-const categoriaIdExiste = async (id) => {
+const idCategoryExists = async (id) => {
   const existeIdCategoria = await Categorie.findById(id);
 
   if (!existeIdCategoria) {
     throw new Error(`El id de la categoria no existe`);
   }
 };
-const productoIdExiste = async (id) => {
+const idProductExists = async (id) => {
   const existeIdProducto = await Porduct.findById(id);
 
   if (!existeIdProducto) {
     throw new Error(`El id del producto no existe`);
   }
 };
-const pedidoIdExiste = async (id) => {
+const idOrderExists = async (id) => {
   const existeIdPedido = await Order.findById(id);
 
   if (!existeIdPedido) {
     throw new Error(`El id del pedido no existe`);
   }
 };
-const nombreCategoriaExiste = async (nombre = "") => {
-  const existeNombreCategoria = await Categorie.findOne({ nombre });
+const nameCategoryExists = async (name = "") => {
+  const existeNombreCategoria = await Categorie.findOne({ name });
   if (existeNombreCategoria) {
-    throw new Error(`La categoría ${nombre} ya existe`);
+    throw new Error(`La categoría ${name} ya existe`);
   }
 };
-const nombreProductoExiste = async (nombre = "") => {
-  const existeNombreProducto = await Porduct.findOne({ nombre });
+const nameProductExists = async (name = "") => {
+  const existeNombreProducto = await Porduct.findOne({ name });
   if (existeNombreProducto) {
-    throw new Error(`El producto ${nombre} ya existe`);
+    throw new Error(`El producto ${name} ya existe`);
   }
 };
 
 module.exports = {
-  emailExiste,
-  idExiste,
-  categoriaIdExiste,
-  pedidoIdExiste,
-  nombreCategoriaExiste,
-  productoIdExiste,
-  nombreProductoExiste,
+  emailExists,
+  idExists,
+  idCategoryExists,
+  idOrderExists,
+  nameCategoryExists,
+  idProductExists,
+  nameProductExists,
 };

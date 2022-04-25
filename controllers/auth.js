@@ -1,27 +1,27 @@
 const { request, response } = require("express");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
-const { generarJWT } = require("../helpers/generar-jwt");
+const { generateJWT } = require("../helpers/generate-jwt");
 
 const login = async (req = request, res = response) => {
   const { email, password } = req.body;
 
   try {
-    const usuario = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
-    if (!usuario) {
+    if (!user) {
       return res.status(400).json({
         msg: "Usuario o contraseña incorrectos",
         ok: false,
       });
     }
-    if (!usuario.estado) {
+    if (!user.status) {
       return res.status(400).json({
         msg: "Usuario inactivo",
         ok: false,
       });
     }
-    const validPassword = bcrypt.compareSync(password, usuario.password);
+    const validPassword = bcrypt.compareSync(password, user.password);
 
     if (!validPassword) {
       return res.status(400).json({
@@ -30,16 +30,15 @@ const login = async (req = request, res = response) => {
       });
     }
 
-    const token = await generarJWT(usuario._id);
+    const token = await generateJWT(user._id);
 
     res.json({
       msg: "Login realizado con éxito",
       ok: true,
-      usuario,
+      user,
       token,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       msg: "Usuario o contraseña incorrectos",
       ok: false,

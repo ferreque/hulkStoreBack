@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const UserSchema = new Schema({
-  nombre: {
+  name: {
     type: String,
     required: [true, "El nombre de usuario es obligatorio"],
   },
@@ -22,22 +22,22 @@ const UserSchema = new Schema({
     required: true,
     enum: ["ADMIN_ROLE", "USER_ROLE"],
   },
-  estado: {
+  status: {
     type: Boolean,
     default: true,
     required: true,
   },
-  provincia: {
+  province: {
     type: String,
     required: [true, "El nombre de la provincia es obligatorio"],
   },
-  localidad: {
+  location: {
     type: String,
     required: [true, "El nombre de la localidad es obligatorio"],
   },
-  direccionEnvio: {
+  shippingAddress: {
     type: String,
-    required: [true, "El nombre de la direeción es obligatorio"],
+    required: [true, "El nombre de la dirección es obligatorio"],
   },
 });
 UserSchema.methods.toJSON = function () {

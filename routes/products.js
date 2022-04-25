@@ -1,60 +1,60 @@
 const { Router } = require("express");
 const router = Router();
 const { check } = require("express-validator");
-const { validarCampos } = require("../middlewares/validar-campos");
+const { validateFields } = require("../middlewares/validate-fields");
 const {
-  productoIdExiste,
-  nombreProductoExiste,
-  categoriaIdExiste,
+  idProductExists,
+  nameProductExists,
+  idCategoryExists,
 } = require("../helpers/db-validators");
-const { validarJWT } = require("../middlewares/validar-jwt");
-const { esAdminRole } = require("../middlewares/validar-rol");
+const { validateJWT } = require("../middlewares/validate-jwt");
+const { isAdminRole } = require("../middlewares/validate-rol");
 const {
-  productsGet,
-  productGet,
-  productsPost,
-  productsPut,
-  productsDelete,
+  getProducts,
+  getOneProduct,
+  createProduct,
+  editProduct,
+  deleteProduct,
 } = require("../controllers/products");
 
-router.get("/", [], productsGet);
+router.get("/", [], getProducts);
 
-router.get("/:id", [], productGet);
+router.get("/:id", [], getOneProduct);
 router.post(
   "/",
   [
-    validarJWT,
-    esAdminRole,
-    check("nombre", "El nombre es obligatorio").not().isEmpty(),
-    check("nombre").custom(nombreProductoExiste),
-    check("precio", "El precio del producto es obligatorio").not().isEmpty(),
+    validateJWT,
+    isAdminRole,
+    check("name", "El nombre es obligatorio").not().isEmpty(),
+    check("name").custom(nameProductExists),
+    check("price", "El precio del producto es obligatorio").not().isEmpty(),
     // check("categorie", "No es un id de categoria válido").isMongoId(),
-    check("categorie").custom(categoriaIdExiste),
-    validarCampos,
+    check("categorie").custom(idCategoryExists),
+    validateFields,
   ],
-  productsPost
+  createProduct
 );
 router.put(
   "/:id",
   [
-    validarJWT,
-    esAdminRole,
+    validateJWT,
+    isAdminRole,
     check("id", "No es un id de producto válido").isMongoId(),
-    check("id").custom(productoIdExiste),
-    validarCampos,
+    check("id").custom(idProductExists),
+    validateFields,
   ],
-  productsPut
+  editProduct
 );
 router.delete(
   "/:id",
   [
-    validarJWT,
-    esAdminRole,
+    validateJWT,
+    isAdminRole,
     check("id", "No es un id de producto válido").isMongoId(),
-    check("id").custom(productoIdExiste),
-    validarCampos,
+    check("id").custom(idProductExists),
+    validateFields,
   ],
-  productsDelete
+  deleteProduct
 );
 
 module.exports = router;
