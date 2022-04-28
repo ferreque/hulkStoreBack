@@ -22,7 +22,6 @@ const getOneProduct = async (req = request, res = response) => {
 
 const createProduct = async (req = request, res = response) => {
   const { status, ...body } = req.body;
-  console.log(body);
   data = {
     ...body,
     user: req.user._id,
@@ -50,7 +49,11 @@ const editProduct = async (req = request, res = response) => {
 const deleteProduct = async (req = request, res = response) => {
   const id = req.params.id;
 
-  const product = await Product.findByIdAndDelete(id, { new: true });
+  const product = await Product.findByIdAndUpdate(
+    id,
+    { status: false },
+    { new: true }
+  );
   res.json({
     msg: "Producto eliminado",
     product,

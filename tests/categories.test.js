@@ -1,64 +1,63 @@
 require("dotenv").config();
 const Server = require("../models/server");
 const request = require("supertest");
-const Product = require("../models/product");
+const Categorie = require("../models/categorie");
 const { getToken } = require("./helpers");
 const api = request(new Server().app);
 
 beforeEach(async () => {
-  await Product.deleteMany({ status: false });
+  await Categorie.deleteMany({ status: false });
 });
 
 describe("GET", () => {
-  test("products are returned: status 200, array and json", async () => {
+  test("categories are returned: status 200, array and json", async () => {
     await api
-      .get("/api/products")
+      .get("/api/categories")
       .expect(200)
       .expect(Array)
       .expect("Content-Type", /application\/json/);
   });
-  test("sigle product are returned: status 200, array and json", async () => {
+  test("sigle categorie are returned: status 200, array and json", async () => {
     await api
-      .get("/api/products/626a9837318587b9d0fc6b32")
+      .get("/api/categories/626a9837318587b9d0fc6b32")
       .expect(200)
       .expect(Array)
       .expect("Content-Type", /application\/json/);
   });
 });
 describe("POST", () => {
-  test("creation a new product respond with a status code 200", async () => {
+  test("creation a new categorie respond with a status code 200", async () => {
     const token = await getToken();
     const response = await api
-      .post("/api/products")
+      .post("/api/categories")
       .set("x-token", token)
       .send({
-        name: "testProduct",
-        price: 0,
-        stock: 10,
-        categorie: "626aca5ebce202f318eb8a8f",
+        name: "testCategorieCreated",
       })
       .expect(200);
-    idProductTest = response._body.product._id;
+    idCategorieTest = response._body.categorie._id;
   });
 });
 
 describe("PUT", () => {
-  test("products are edit and respond with a status code 200", async () => {
+  test("categories are edit and respond with a status code 200", async () => {
     const token = await getToken();
     const response = await api
-      .put(`/api/products/${idProductTest}`)
-      .send({ name: "editedProduct" })
+      .put(`/api/categories/${idCategorieTest}`)
       .set("x-token", token)
+      .send({
+        name: "testCategorieEdited",
+      })
       .expect(200);
     console.log(response._body);
   });
 });
 
 describe("DELETE", () => {
-  test("products are delited respond with a status code 200", async () => {
+  test("categories are delited respond with a status code 200", async () => {
     const token = await getToken();
     const response = await api
-      .delete(`/api/products/${idProductTest}`)
+      .delete(`/api/categories/${idCategorieTest}`)
       .set("x-token", token)
       .expect(200);
     console.log(response._body);
