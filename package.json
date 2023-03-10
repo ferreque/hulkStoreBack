@@ -4,28 +4,30 @@
   "description": "rest api",
   "main": "app.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon app.js",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
     "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ferreque/hulkStoreBack"
   },
   "author": "Fernando Requena",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ferreque/hulkStoreBack/issues"
+  },
+  "homepage": "https://github.com/ferreque/hulkStoreBack#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-validator": "^6.14.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.2.9",
-    "nodemon": "^2.0.15"
+    "mongoose": "^6.2.9"
   },
   "devDependencies": {
-    "jest": "^27.5.1",
-    "supertest": "^6.2.2"
-  },
-  "jest": {
-    "testEnvironment": "node"
+    "nodemon": "^2.0.20"
   }
 }
