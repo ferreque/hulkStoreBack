@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const { MONGODB_CNN } = process.env;
-const connectionEnv = String(MONGODB_CNN);
-
 const dbConnection = async () => {
   try {
-    await mongoose.connect(connectionEnv);
+    await mongoose.connect(process.env.MONGODB_CNN, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("Base de datos online");
   } catch (error) {
     throw new Error(error);
