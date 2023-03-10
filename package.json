@@ -2,16 +2,15 @@
   "name": "backhulk",
   "version": "1.0.0",
   "description": "rest api",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon app",
-    "start": "cross-env NODE_ENV=production nodemon app",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit"
+    "dev": "cross-env NODE_ENV=development nodemon app.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
+    "start": "node app.js"
   },
   "author": "Fernando Requena",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
