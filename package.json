@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon app",
-    "start": "index.js",
+    "start": "cross-env NODE_ENV=production nodemon app",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit"
   },
   "author": "Fernando Requena",
