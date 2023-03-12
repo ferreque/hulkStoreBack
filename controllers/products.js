@@ -3,6 +3,7 @@ const Product = require("../models/product");
 
 const getProducts = async (req = request, res = response) => {
   const products = await Product.find({ status: true })
+    .mode("no-cors")
     .populate("user", "name email")
     .populate("categorie", "name");
   res.json({
