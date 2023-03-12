@@ -2,14 +2,15 @@ const { request, response } = require("express");
 const Product = require("../models/product");
 
 const getProducts = async (req = request, res = response) => {
+  console.log(getProducts);
   const products = await Product.find({ status: true })
-    .mode("no-cors")
     .populate("user", "name email")
     .populate("categorie", "name");
   res.json({
     msg: "GET productos",
     products,
   });
+  console.log(products);
 };
 
 const getOneProduct = async (req = request, res = response) => {
