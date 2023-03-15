@@ -7,7 +7,7 @@ const OrderSchema = new Schema({
     required: true,
   },
   products: {
-    type: String,
+    type: Array,
     required: true,
   },
   status: {
