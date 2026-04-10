@@ -1,24 +1,15 @@
-name: CD — Deploy to EC2
+name: CD — Deploy to Vercel
 
 on:
   push:
     branches: [main]
 
+# Vercel deploys automatically via GitHub integration on push to main.
+# No additional steps needed here.
 jobs:
-  deploy:
-    name: Deploy to AWS EC2
+  notify:
+    name: Deploy triggered
     runs-on: ubuntu-latest
-
     steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            cd ~/hulkStoreBack
-            git pull origin main
-            npm ci
-            npm run build
-            pm2 restart hulkstore-back
+      - name: Confirm deploy handed off to Vercel
+        run: echo "Vercel native integration handles deployment on push to main."

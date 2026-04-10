@@ -25,6 +25,7 @@ export class AuthService {
     return {
       ok: true,
       token,
+      user,
       menu: this.getMenu(user.rol),
     };
   }
